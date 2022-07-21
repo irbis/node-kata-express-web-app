@@ -1,5 +1,19 @@
 <%- include('partials/_htmlhead') -%>
 
-<h1><%= title %></h1>
+<h1>This section is about of how to use URI to specify parameters.</h1>
+<p>
+    Related files in source codes: router/message.js, views/message.ejs
+</p>
+<p>
+    The following URI uses to see message: /message/&lt;name&gt;,
+    <a href="/message/world">for instance.</a>
+</p>
+<p>
+    <% if (hasMessage) { %>
+        Current message is: <%= message %>
+    <% } else { %>
+        No message: there is no query parameter defined.
+    <% } %>
+</p>
 
 <%- include('partials/_htmlfoot') -%>

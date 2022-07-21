@@ -1,6 +1,8 @@
 import express from 'express'
 import compression from 'compression'
-import {helloRouter} from "./routers/hello.js";
+
+import { homeRouter } from "./routers/home.js";
+import { messageRouter } from "./routers/message.js";
 
 import { fileURLToPath } from 'url'
 import { dirname, sep } from 'path'
@@ -26,11 +28,8 @@ app.disable('x-powered-by')
 app.set('view engine', 'ejs')
 app.set('views', cfg.dir.views)
 
-app.get('/', (req, res) => {
-    res.redirect('/hello')
-})
-
-app.use('/hello', helloRouter)
+app.use('/', homeRouter)
+app.use('/message', messageRouter)
 
 // static files
 app.use(express.static(cfg.dir.static))
