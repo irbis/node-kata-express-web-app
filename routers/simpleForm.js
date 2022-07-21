@@ -11,3 +11,11 @@ simpleFormRouter.get("/", (req, res, next) => {
             data: req.query
         })
 })
+
+simpleFormRouter.post("/", (req, res, next) => {
+    res.render('simpleForm',
+        {
+            title: SECTION_TITLE,
+            data: req.body
+        })
+})

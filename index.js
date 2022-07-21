@@ -29,6 +29,10 @@ app.disable('x-powered-by')
 app.set('view engine', 'ejs')
 app.set('views', cfg.dir.views)
 
+// body parsing
+app.use(express.urlencoded({ extended: true }))
+
+// routing and middleware
 app.use('/', homeRouter) // home page
 app.use('/message', messageRouter) // message section
 app.use('/simpleform', simpleFormRouter) // simple form section
