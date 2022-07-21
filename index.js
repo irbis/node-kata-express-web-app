@@ -3,6 +3,7 @@ import compression from 'compression'
 
 import { homeRouter } from "./routers/home.js";
 import { messageRouter } from "./routers/message.js";
+import { simpleFormRouter } from "./routers/simpleForm.js";
 
 import { fileURLToPath } from 'url'
 import { dirname, sep } from 'path'
@@ -28,8 +29,9 @@ app.disable('x-powered-by')
 app.set('view engine', 'ejs')
 app.set('views', cfg.dir.views)
 
-app.use('/', homeRouter)
-app.use('/message', messageRouter)
+app.use('/', homeRouter) // home page
+app.use('/message', messageRouter) // message section
+app.use('/simpleform', simpleFormRouter) // simple form section
 
 // static files
 app.use(express.static(cfg.dir.static))
