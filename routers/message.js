@@ -8,8 +8,7 @@ messageRouter.get("/", (req, res, next) => {
     res.render('message',
         {
             title: SECTION_TITLE,
-            hasMessage: false,
-            message: ''
+            message: null
         })
 })
 
@@ -17,7 +16,6 @@ messageRouter.get("/:name", (req, res, next) => {
     res.render('message',
         {
             title: SECTION_TITLE,
-            hasMessage: true,
             message: `Hello ${req.params.name}`
         })
 })
