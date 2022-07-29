@@ -1,0 +1,9 @@
+<%- include('partials/_htmlhead') -%>
+<h1>List of questions:</h1>
+<table style="border: solid green;">
+       <tr><th>Category</th><th>Question</th></tr>
+    <% for (q of questions) { %>
+        <tr><td><%= q.category %></td><td><%= q.question %></td></tr>
+    <% }%>
+</table>
+<%- include('partials/_htmlfoot') -%>
