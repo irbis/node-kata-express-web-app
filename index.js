@@ -5,20 +5,8 @@ import { homeRouter } from "./routers/home.js";
 import { messageRouter } from "./routers/message.js";
 import { simpleFormRouter } from "./routers/simpleForm.js";
 import { questionsRouter } from "./routers/questions.js";
-
-import { fileURLToPath } from 'url'
-import { dirname, sep } from 'path'
-
-// configuration
-const __dirname = dirname(fileURLToPath(import.meta.url)) + sep
-const cfg = {
-    port: process.env.PORT || 3000,
-    dir: {
-        root: __dirname,
-        static: __dirname + 'static' + sep,
-        views: __dirname + 'views' + sep
-    }
-}
+import { mongoStatus, mongoConnect, mongoClose } from "./routers/mongostatus.js";
+import { cfg } from "./cfg.js";
 
 const app = express()
 
@@ -38,6 +26,7 @@ app.use('/', homeRouter) // home page
 app.use('/message', messageRouter) // message section
 app.use('/simpleform', simpleFormRouter) // simple form section
 app.use('/questions', questionsRouter) // questions sections
+app.use('/_mongostatus', mongoStatus) // mongo status tech section
 
 // static files
 app.use(express.static(cfg.dir.static))
@@ -48,5 +37,17 @@ app.use((req, res) => {
 })
 
 app.listen(cfg.port, () => {
-    console.log(`Example app listening at http://localhost:${cfg.port}`)
+    mongoConnect()
+        .catch(err => {
+            console.log(`Error while connecting to the database: ${err.message}`)
+            process.exit(-1)
+        })
+        .then(version => {
+            console.log(`Successfully connected to the mongoDB! Recordset version is ${version}`)
+            console.log(`Example app listening at http://localhost:${cfg.port}`)
+        })
+})
+
+process.on('exit', () => {
+    mongoClose()
 })
